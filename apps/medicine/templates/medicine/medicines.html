@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Select Medicine</title>
+    <meta name="description" content="">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+
+        <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Smart Health</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Medicines</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Blood Bank</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Profile</a>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <h2 class="text-center text-primary" style="margin-top: 80px;">Please Select A Medicine</h2><br><br>
+        {% for medicine in medicines %}
+        <div class="card mb-3" style="max-width: 540px; margin:auto;">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="{{ medicine.image.url }}" alt="Medicine Image" style="width: 180px; height:auto">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">{{ medicine.name }}</h5>
+                        <p class="card-text text-dark">{{ medicine.description }}</p>
+                        <p class="card-text"><small class="text-danger">Company : {{ medicine.company }}</small></p>
+                        <a href="{% url 'order' hospital.id medicine.id%}" class="btn btn-info">Buy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</body>
+
+</html>

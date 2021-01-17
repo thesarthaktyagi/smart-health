@@ -51,8 +51,10 @@
                 <p class="card-text text-success">Beds Available : {{ hospital.beds_available }}</p>
                 <p class="card-text text-success">Doctors Available : {{ hospital.doctors_available }}</p>
                 <a href="{% url 'reserve' hospital.id %}" class="btn btn-info">Reserve Bed</a>
-                <a href="{% url 'view_department' hospital.id %}" class="btn btn-outline-danger">Consult Doctor</a>
-                <a href="#" class="btn btn-outline-primary">Buy Medicine</a>
+                <a href="{% url 'view_department' hospital.id %}" class="btn btn-outline-danger">Consult Doctor
+                    On Call</a>
+                <a href="{% url 'view_department' hospital.id %}" class="btn btn-outline-dark">Book Appointment</a>
+                <a href="{% url 'show-medicines' hospital.id %}" class="btn btn-outline-primary">Buy Medicine</a>
             </div>
         </div>
     </div>
