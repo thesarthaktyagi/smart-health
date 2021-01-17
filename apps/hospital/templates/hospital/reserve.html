@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Smart Health</title>
+    <title>Reserve Bed</title>
     <meta name="description" content="">
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -42,24 +42,19 @@
         </nav>
         <br>
         <br>
-        <div class="row">
-            {% for hospital in hospitals %}
-            <div class="col-sm-6">
-                <div class="card mb-3 border-dark text-dark bg-light" style="max-width: 480px; margin-top: 40px;">
-                    <img src="{{ hospital.image.url }}" class="card-img-top" alt="Hospital Image"
-                        style="width: 454px; height:200px">
-                    <div class="card-body">
-                        <h5 class="card-title text-primary">{{ hospital.name }}</h5>
-                        <p class="card-text bg-warning text-dark bg-gradient">Location : {{ hospital.location }}</p>
-                        <p class="card-text text-success">Beds Available : {{ hospital.beds_available }}</p>
-                        <p class="card-text text-success">Doctors Available : {{ hospital.doctors_available }}</p>
-                        <a href="{% url 'reserve' hospital.id %}" class="btn btn-info">Reserve Bed</a>
-                        <a href="{% url 'view_hospital' hospital.id %}" class="btn btn-outline-danger">More</a>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
+        <form class="text-center border border-light p-5" action="{% url 'success' hospital.id%}" method="POST">
+            {% csrf_token %}
+            <p class="h3 mb-3"><strong>Reserve Bed In {{ hospital.name }}</strong></p>
+            <p class="h3 mb-3">Reserve Bed Now And Get Successful Refund After Discharge From Hospital.</p>
+            <!-- Razorpay integration -->
+            <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="rzp_test_C7uQQW33qnlN7U"
+                data-amount="10000" data-currency="INR" data-order_id="{{ payment.id }}"
+                data-buttontext="Pay with Razorpay" data-name="{{ hospital.name }}"
+                data-description="Reserve Bed Now And Get Successful Refund After Discharge From Hospital."
+                data-image="{{ hospital.image.url }}" data-prefill.name="User" data-prefill.email="user@example.com"
+                data-theme.color="#F37254"></script>
+        </form>
+    </div>
     </div>
 </body>
 

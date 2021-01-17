@@ -8,4 +8,8 @@ urlpatterns = [
          views.department, name='view_department'),
     path('doctor/<int:hospital_pk>/<int:department_pk>/',
          views.viewDoctor, name='doctor'),
+    path('reserve/<int:hospital_pk>/',
+         views.reserve, name='reserve'),
+    path('success/<int:hospital_pk>/',
+         views.success, name='success'),
 ]

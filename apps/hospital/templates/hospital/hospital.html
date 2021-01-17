@@ -50,7 +50,7 @@
                 <p class="card-text bg-warning text-dark bg-gradient">Location : {{ hospital.location }}</p>
                 <p class="card-text text-success">Beds Available : {{ hospital.beds_available }}</p>
                 <p class="card-text text-success">Doctors Available : {{ hospital.doctors_available }}</p>
-                <a href="{% url 'view_hospital' hospital.id %}" class="btn btn-info">Reserve Bed</a>
+                <a href="{% url 'reserve' hospital.id %}" class="btn btn-info">Reserve Bed</a>
                 <a href="{% url 'view_department' hospital.id %}" class="btn btn-outline-danger">Consult Doctor</a>
                 <a href="#" class="btn btn-outline-primary">Buy Medicine</a>
             </div>

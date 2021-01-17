@@ -10,6 +10,7 @@ django = "*"
 pyrebase4 = "*"
 pillow = "*"
 whitenoise = "*"
+razorpay = "*"
 
 [requires]
 python_version = "3.7"
