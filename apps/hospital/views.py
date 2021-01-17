@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Hospital, Department, Doctor
+from apps.user.models import CustomUser
 import razorpay
 
 
@@ -22,7 +23,7 @@ def department(request, hospital_pk):
 
 
 def viewDoctor(request, hospital_pk, department_pk):
-    doctors = Doctor.objects.filter(
+    doctors = CustomUser.objects.filter(
         hospital__pk=hospital_pk, department__pk=department_pk)
     print(request, hospital_pk, department_pk)
     return render(request, 'hospital/doctors.html', {'doctors': doctors})
