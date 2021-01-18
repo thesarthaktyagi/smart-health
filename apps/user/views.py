@@ -10,6 +10,8 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from .forms import CustomUserCreationForm
+from .models import CustomUser
 
 
 def generate_session_token(length=10):
@@ -20,11 +22,11 @@ def signin(request):
     if not request.method == 'POST':
         return render(request, 'user/login.html')
 
-    username = request.POST['username']
+    email = request.POST['email']
     password = request.POST['password']
 
     # Validation Part
-    if not re.match('^[\w\.\+\-]+\@[\w]+\.[a-z]{2,3}$', username):
+    if not re.match('^[\w\.\+\-]+\@[\w]+\.[a-z]{2,3}$', email):
         return render(request, 'user/login.html', {'form': AuthenticationForm(), 'error': 'Please enter valid email'})
 
     if len(password) < 3:
@@ -33,11 +35,11 @@ def signin(request):
     UserModel = get_user_model()
 
     try:
-        user = UserModel.objects.get(email=username)
+        user = UserModel.objects.get(email=email)
 
         if user.check_password(password):
             usr_dict = UserModel.objects.filter(
-                email=username).values().first()
+                email=email).values().first()
             usr_dict.pop('password')
 
             if user.session_token != '0':
@@ -49,13 +51,32 @@ def signin(request):
             user.session_token = token
             user.save()
             login(request, user)
-            return redirect('home')
+            return redirect('hospital_home')
 
         else:
             return render(request, 'user/login.html', {'form': AuthenticationForm(), 'error': 'Invalid password'})
 
     except UserModel.DoesNotExist:
         return render(request, 'user/login.html', {'form': AuthenticationForm(), 'error': 'Email does not exist'})
+
+
+def signup(request):
+    if request.method == 'GET':
+        return render(request, 'user/signup.html', {'form': CustomUserCreationForm()})
+
+    else:
+        if request.POST['password1'] == request.POST['password2']:
+            try:
+                user = CustomUser.objects.create(email=request.POST['email'])
+                user.set_password(request.POST['password1'])
+                user.save()
+                login(request, user)
+                return redirect('signin')
+            except IntegrityError:
+                return render(request, 'user/signup.html', {'form': CustomUserCreationForm(), 'error': 'The username is already taken. Please choose another username'})
+
+        else:
+            return render(request, 'user/signup.html', {'form': CustomUserCreationForm(), 'error': 'The Passwords did not match'})
 
 
 @login_required
