@@ -1,5 +1,4 @@
 from .models import CustomUser
-from django.http import JsonResponse
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login, logout, authenticate
 import random
@@ -12,6 +11,9 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm
 from .models import CustomUser
+from apps.appointment.models import Appointment, HospitalAppointment
+from apps.medicine.models import Order
+from apps.hospital.models import Hospital
 
 
 def generate_session_token(length=10):
@@ -69,9 +71,11 @@ def signup(request):
             try:
                 user = CustomUser.objects.create(email=request.POST['email'])
                 user.set_password(request.POST['password1'])
+                token = generate_session_token()
+                user.session_token = token
                 user.save()
                 login(request, user)
-                return redirect('signin')
+                return redirect('hospital_home')
             except IntegrityError:
                 return render(request, 'user/signup.html', {'form': CustomUserCreationForm(), 'error': 'The username is already taken. Please choose another username'})
 
@@ -80,16 +84,30 @@ def signup(request):
 
 
 @login_required
-def signout(request, id):
+def signout(request):
+    email = request.user.email
     logout(request)
 
     UserModel = get_user_model()
+    hospitals = Hospital.objects.all()
 
     try:
-        user = UserModel.objects.get(pk=id)
+        user = CustomUser.objects.get(email=email)
         user.session_token = '0'
         user.save()
     except UserModel.DoesNotExist:
         return render(request, 'user/login.html', {'form': AuthenticationForm(), 'error': 'Invalid user'})
 
-    return render(request, 'user/login.html', {'form': AuthenticationForm(), 'error': 'Successfully logged out'})
+    return render(request, 'hospital/index.html', {'form': AuthenticationForm(), 'hospitals': hospitals, 'error': 'Successfully logged out'})
+
+
+def profile(request):
+    if request.user.session_token != '0':
+        user = get_object_or_404(CustomUser, email=request.user.email)
+        appointments = Appointment.objects.all().filter(email=user.email)
+        hospital_appointment = HospitalAppointment.objects.all().filter(email=user.email)
+        orders = Order.objects.all().filter(email=user.email)
+
+        return render(request, 'user/profile.html', {'user': user, 'appointment': appointments, 'hospital_appointment': hospital_appointment, 'orders': orders})
+    else:
+        return redirect('signin')

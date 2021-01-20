@@ -15,7 +15,7 @@
     <section class="container-fluid">
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Smart Health</a>
+                <a class="navbar-brand" href="{% url 'hospital_home' %}">Smart Health</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -23,16 +23,24 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
+                        {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Medicines</a>
+                            <a class="nav-link active" href="{% url 'profile' %}">Hi, {{ user.email }}</a>
                         </li>
+                        <li><a href="{% url 'signout' %}" onclick="$('#signOutBtn').click()" class="nav-link">Logout</a>
+                            <form style='display: none;' method="POST" action="{% url 'signout' %}">
+                                {% csrf_token %}
+                                <button id="signOutBtn" type="submit">Logout</button>
+                            </form>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Logout</a>
+                        </li> -->
+                        {% else %}
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">Blood Bank</a>
+                            <a class="nav-link active" href="{% url 'signin' %}">Login</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Profile</a>
-                        </li>
-
+                        {% endif %}
 
                     </ul>
                 </div>
@@ -51,6 +59,12 @@
                     <div class="col">
                         <label for="name">Hospital Name</label>
                         <input class="form-control" type="text" placeholder="{{ hospital.name }}" readonly>
+                    </div><br>
+
+                    <div class="col">
+                        <label for="email">Email</label>
+                        <input class="form-control" type="email" name="email" id="email" placeholder="{{ user.email }}"
+                            readonly>
                     </div><br>
                 </div>
 

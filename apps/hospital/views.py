@@ -2,11 +2,22 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Hospital, Department, Doctor
 from apps.user.models import CustomUser
 import razorpay
+from apps.appointment.models import Appointment, HospitalAppointment
 
 
 def home(request):
     hospitals = Hospital.objects.all()
-    return render(request, 'hospital/index.html', {'hospitals': hospitals})
+    if request.user.is_authenticated:
+        users = get_object_or_404(CustomUser, email=request.user.email)
+        if request.user.is_doctor:
+            call_appointments = Appointment.objects.all().filter(doctor__id=request.user.id)
+            hospital_appointments = HospitalAppointment.objects.all().filter(
+                doctor__id=request.user.id)
+            return render(request, 'hospital/home.html', {'hospitals': hospitals, 'users': users, 'call_appointments': call_appointments, 'hospital_appointments': hospital_appointments})
+        else:
+            return render(request, 'hospital/index.html', {'hospitals': hospitals, 'users': users})
+    else:
+        return render(request, 'hospital/index.html', {'hospitals': hospitals})
 
 
 def viewHospital(request, hospital_pk):

@@ -18,6 +18,7 @@ class Medicine(models.Model):
 
 class Order(models.Model):
     name = models.TextField(max_length=30)
+    email = models.EmailField(blank=True)
     hospital = models.TextField(max_length=30)
     quantity = models.IntegerField()
     address = models.TextField(max_length=50)

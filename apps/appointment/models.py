@@ -5,6 +5,7 @@ from apps.user.models import CustomUser
 class Appointment(models.Model):
     doctor = models.ForeignKey(
         CustomUser, on_delete=models.SET_NULL, blank=True, null=True)
+    email = models.EmailField(blank=True)
     name = models.TextField(max_length=30)
     gender = models.TextField(max_length=10)
     age = models.IntegerField()
@@ -21,6 +22,7 @@ class Appointment(models.Model):
 class HospitalAppointment(models.Model):
     doctor = models.ForeignKey(
         CustomUser, on_delete=models.SET_NULL, blank=True, null=True)
+    email = models.EmailField(blank=True)
     name = models.TextField(max_length=30)
     gender = models.TextField(max_length=10)
     age = models.IntegerField()

@@ -6,7 +6,7 @@ admin.site.register(Medicine)
 
 
 class OrderDataAdmin(admin.ModelAdmin):
-    readonly_fields = ('name', 'hospital', 'quantity',
+    readonly_fields = ('name', 'email', 'hospital', 'quantity',
                        'address', 'mobile', 'time', 'prescription')
 
 

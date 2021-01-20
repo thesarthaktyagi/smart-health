@@ -50,23 +50,30 @@
         </nav>
         <br>
         <br>
-        <div class="row">
-            {% for hospital in hospitals %}
-            <div class="col-sm-6">
-                <div class="card mb-3 border-dark text-dark bg-light" style="max-width: 480px; margin-top: 40px;">
-                    <img src="{{ hospital.image.url }}" class="card-img-top" alt="Hospital Image"
-                        style="width: 454px; height:200px">
-                    <div class="card-body">
-                        <h5 class="card-title text-primary">{{ hospital.name }}</h5>
-                        <p class="card-text bg-warning text-dark bg-gradient">Location : {{ hospital.location }}</p>
-                        <p class="card-text text-success">Beds Available : {{ hospital.beds_available }}</p>
-                        <p class="card-text text-success">Doctors Available : {{ hospital.doctors_available }}</p>
-                        <a href="{% url 'reserve' hospital.id %}" class="btn btn-info">Reserve Bed</a>
-                        <a href="{% url 'view_hospital' hospital.id %}" class="btn btn-outline-danger">More</a>
-                    </div>
-                </div>
-            </div>
+        <div class="row" style="margin-top: 40px;">
+            <h2 class="text-success">All Of Your Appointments Will Be Shown Here</h2>
+            <br>
+            <br>
+            <br>
+            <h3 class="text-primary">Call Appointments</h3>
+            {% for appointment in call_appointments %}
+            <li>You have a on-call appointment with <span class="text-danger">{{ appointment.name }}</span> requested at
+                <span class="text-danger">{{ appointment.time }}</span>.
+                The query is <span class="text-danger">
+                    {{ appointment.query }}</span>. The gender is <span class="text-danger">
+                    {{ appointment.gender }}</span> and Mobile No is
+                <span class="text-danger">{{ appointment.mobile }}</span>
+            </li>
             {% endfor %}
+            <br>
+            <br>
+            <br>
+            <h3 class="text-primary">Hospital Appointments</h3>
+            {% for appointment in hospital_appointments %}
+            <li>You have an appointment with <span class="text-danger">{{ appointment.name }}</span> on <span
+                    class="text-danger">{{ appointment.time }}</span></li>
+            {% endfor %}
+
         </div>
     </div>
 </body>
