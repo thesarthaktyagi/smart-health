@@ -56,22 +56,56 @@
             <br>
             <br>
             <h3 class="text-primary">Call Appointments</h3>
+            <br>
+            <br>
+            <br>
             {% for appointment in call_appointments %}
-            <li>You have a on-call appointment with <span class="text-danger">{{ appointment.name }}</span> requested at
-                <span class="text-danger">{{ appointment.time }}</span>.
-                The query is <span class="text-danger">
-                    {{ appointment.query }}</span>. The gender is <span class="text-danger">
-                    {{ appointment.gender }}</span> and Mobile No is
-                <span class="text-danger">{{ appointment.mobile }}</span>
-            </li>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card bg-light border-dark">
+                        <div class="card-body">
+                            <h5 class="card-title text-danger">Name : {{ appointment.name }}</h5>
+                            <h5 class="card-title text-info">Gender : {{ appointment.gender }}</h5>
+                            <h5 class="card-title text-dark">Age : {{ appointment.age }}</h5>
+                            <h5 class="card-title text-primary">Mobile : {{ appointment.mobile }}</h5>
+                            <p class="card-text text-success">Time : {{ appointment.time }}.
+                            </p>
+                            <p class="card-text text-danger">Time : {{ appointment.time }}.
+                            </p>
+
+                            <a href="{% url 'callAppointment' appointment.id %}" class="btn btn-primary">Mark
+                                Done</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             {% endfor %}
             <br>
             <br>
             <br>
             <h3 class="text-primary">Hospital Appointments</h3>
+            <br>
+            <br>
+            <br>
             {% for appointment in hospital_appointments %}
-            <li>You have an appointment with <span class="text-danger">{{ appointment.name }}</span> on <span
-                    class="text-danger">{{ appointment.time }}</span></li>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card bg-light border-dark">
+                        <div class="card-body">
+                            <h5 class="card-title text-danger">Name : {{ appointment.name }}</h5>
+                            <h5 class="card-title text-info">Gender : {{ appointment.gender }}</h5>
+                            <h5 class="card-title text-dark">Age : {{ appointment.age }}</h5>
+                            <h5 class="card-title text-primary">Mobile : {{ appointment.mobile }}</h5>
+                            <p class="card-text text-danger">Time : {{ appointment.time }}.
+                            </p>
+                            <a href="{% url 'hospitalAppointment' appointment.id %}" class="btn btn-primary">Mark
+                                Done</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <li>You have an appointment with <span class="text-danger">{{ appointment.name }}</span> on <span
+                    class="text-danger">{{ appointment.time }}</span></li> -->
             {% endfor %}
 
         </div>

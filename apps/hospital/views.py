@@ -10,12 +10,51 @@ def home(request):
     if request.user.is_authenticated:
         users = get_object_or_404(CustomUser, email=request.user.email)
         if request.user.is_doctor:
-            call_appointments = Appointment.objects.all().filter(doctor__id=request.user.id)
+            call_appointments = Appointment.objects.all().filter(
+                doctor__id=request.user.id).filter(status='Not-Done')
             hospital_appointments = HospitalAppointment.objects.all().filter(
-                doctor__id=request.user.id)
+                doctor__id=request.user.id).filter(status='Not-Done')
             return render(request, 'hospital/home.html', {'hospitals': hospitals, 'users': users, 'call_appointments': call_appointments, 'hospital_appointments': hospital_appointments})
         else:
             return render(request, 'hospital/index.html', {'hospitals': hospitals, 'users': users})
+    else:
+        return render(request, 'hospital/index.html', {'hospitals': hospitals})
+
+
+def callAppointment(request, appointment_pk):
+    hospitals = Hospital.objects.all()
+    appointment = get_object_or_404(Appointment, pk=appointment_pk)
+    appointment.status = 'Done'
+    appointment.save()
+    if request.user.is_authenticated:
+        users = get_object_or_404(CustomUser, email=request.user.email)
+        if request.user.is_doctor:
+            call_appointments = Appointment.objects.all().filter(
+                doctor__id=request.user.id).filter(status='Not-Done')
+            hospital_appointments = HospitalAppointment.objects.all().filter(
+                doctor__id=request.user.id).filter(status='Not-Done')
+            return render(request, 'hospital/home.html', {'hospitals': hospitals, 'users': users, 'call_appointments': call_appointments, 'hospital_appointments': hospital_appointments})
+        else:
+            return render(request, 'hospital/index.html', {'hospitals': hospitals, 'users': users})
+    else:
+        return render(request, 'hospital/index.html', {'hospitals': hospitals})
+
+
+def hospitalAppointment(request, appointment_pk):
+    hospitals = Hospital.objects.all()
+    appointment = get_object_or_404(HospitalAppointment, pk=appointment_pk)
+    appointment.status = 'Done'
+    appointment.save()
+    if request.user.is_authenticated:
+        users = get_object_or_404(CustomUser, email=request.user.email)
+        if request.user.is_doctor:
+            call_appointments = Appointment.objects.all().filter(
+                doctor__id=request.user.id).filter(status='Not-Done')
+            hospital_appointments = HospitalAppointment.objects.all().filter(
+                doctor__id=request.user.id).filter(status='Not-Done')
+            return render(request, 'hospital/home.html', {'hospitals': hospitals, 'users': users, 'call_appointments': call_appointments, 'hospital_appointments': hospital_appointments})
+        else:
+            return render(request, 'hospital/home.html', {'hospitals': hospitals, 'users': users})
     else:
         return render(request, 'hospital/index.html', {'hospitals': hospitals})
 

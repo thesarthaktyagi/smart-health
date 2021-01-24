@@ -13,7 +13,7 @@ class Appointment(models.Model):
     mobile = models.IntegerField()
     time = models.DateTimeField(auto_now_add=True)
     status = models.TextField(
-        max_length=12, blank=True, null=True, default='Not Done')
+        max_length=12, blank=True, null=True, default='Not-Done')
 
     def __str__(self):
         return self.name
@@ -29,6 +29,8 @@ class HospitalAppointment(models.Model):
     mobile = models.IntegerField()
     time = models.DateTimeField(auto_now_add=True)
     appointment_on = models.DateTimeField()
+    status = models.TextField(
+        max_length=12, blank=True, null=True, default='Not-Done')
 
     def __str__(self):
         return self.name

@@ -6,17 +6,17 @@ from apps.user.models import CustomUser
 # Create your views here.
 
 
-@login_required
+# @login_required
 def consult(request, doctor_pk):
     doctor = get_object_or_404(CustomUser, pk=doctor_pk)
     return render(request, 'appointment/consult.html', {'doctor': doctor})
 
 
-@login_required
+# @login_required
 def appointment(request, doctor_pk):
     if request.method == 'POST':
         name = request.POST.get('name')
-        email = request.user.email
+        # email = request.user.email
         gender = request.POST.get('gender')
         age = request.POST.get('age')
         query = request.POST.get('query')
@@ -26,7 +26,7 @@ def appointment(request, doctor_pk):
         entry = Appointment()
         entry.doctor = CustomUser.objects.get(pk=doctor_pk)
         entry.name = name
-        entry.email = email
+        # entry.email = email
         entry.gender = gender
         entry.age = age
         entry.query = query
@@ -42,17 +42,17 @@ def appointment(request, doctor_pk):
         return render(request, 'appointment/consult.html', {'doctor': doctor})
 
 
-@login_required
+# @login_required
 def book(request, doctor_pk):
     doctor = get_object_or_404(CustomUser, pk=doctor_pk)
     return render(request, 'appointment/book-appointment.html', {'doctor': doctor})
 
 
-@login_required
+# @login_required
 def done(request, doctor_pk):
     if request.method == 'POST':
         name = request.POST.get('name')
-        email = request.user.email
+        # email = request.user.email
         gender = request.POST.get('gender')
         age = request.POST.get('age')
         mobile = request.POST.get('mobile')
@@ -62,7 +62,7 @@ def done(request, doctor_pk):
         entry = HospitalAppointment()
         entry.doctor = CustomUser.objects.get(pk=doctor_pk)
         entry.name = name
-        entry.email = email
+        # entry.email = email
         entry.gender = gender
         entry.age = age
         entry.mobile = mobile

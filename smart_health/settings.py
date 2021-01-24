@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'apps.user',
     'apps.appointment',
     'apps.medicine',
+    'apps.ai',
 ]
 
 MIDDLEWARE = [

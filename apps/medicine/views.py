@@ -11,14 +11,14 @@ def showMedicines(request, hospital_pk):
     return render(request, 'medicine/medicines.html', {'medicines': medicines, 'hospital': hospital})
 
 
-@login_required
+# @login_required
 def order(request, hospital_pk, medicine_pk):
     medicine = get_object_or_404(Medicine, pk=medicine_pk)
     hospital = get_object_or_404(Hospital, pk=hospital_pk)
     return render(request, 'medicine/order.html', {'medicine': medicine, 'hospital': hospital})
 
 
-@login_required
+# @login_required
 def postorder(request, hospital_pk, medicine_pk):
     medicine = get_object_or_404(Medicine, pk=medicine_pk)
     hospital = get_object_or_404(Hospital, pk=hospital_pk)

@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="../static/img/health.ico">
+    <!-- Bootstrap CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Josefin Sans', sans-serif;
+        }
+
+        html,
+        body,
+        header,
+        #intro {
+            height: 100%;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand" href="{% url 'hospital_home' %}">Smart Health</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'heart' %}">Heart Disease<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'kidney' %}">Kidney Disease</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'diabetes' %}">Diabetes</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'liver' %}">Liver Diease</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'cancer' %}">Cancer</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <br>
+    <br>
+    {% if news == "good" %}
+    <p class="alert alert-success" role="alert">{{ prediction_text }}</p>
+    {% else %}
+    <p class="alert alert-danger" role="alert">{{ prediction_text }}</p>
+    {% endif %}
+    <br>
+    <br>
+    <h4 class="text-success">5 DO’s</h4>
+    <ul>
+        <li>Exercise Often</li>
+        <li>Clear your mind</li>
+        <li>Eat Fruits and Vegetable</li>
+        <li>Have adequate nutrition</li>
+        <li>Routine Physical Examination</li>
+    </ul>
+    <br>
+    <h4 class="text-danger">5 DON’Ts</h4>
+    <ul>
+        <li>Do not smoke</li>
+        <li>Do not drink often</li>
+        <li>Do not expose to intense sunlight</li>
+        <li>Do not eat fresh water sashimi</li>
+        <li>Do not engage in heavy workout</li>
+    </ul>
+</body>
+
+</html>
